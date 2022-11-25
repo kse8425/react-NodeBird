@@ -1,0 +1,25 @@
+전통적인 방식(SSR)
+브라우저 - 프론트 - 백엔드 -DB 순으로 통신
+
+SPA방식(CSR)
+브라우저 - 프론트
+브라우저 - 백엔드 - DB
+
+프론트 서버에서 페이지를 먼저 받고 데이터는 백엔드 서버에 요청해서 채우는 방식
+장점 : 화면을 빨리 뛰울 수 있다.
+단점 : SSR방식 보다 전체 로딩 속도가 길어 질 수 있다.
+검색엔진에서 페이지 내용을 읽을 수 없을 수도 있다.
+
+해결방안
+- 코드스플리팅: 사용자가 요청한 페이지에 대한 파일만 렌더
+- 서버사이드 랜더링 : 첫 방문은 SSR방식, 다음 요청부터 CSR방식
+
+1. node 설치
+2. next@9, react, react-dom설치
+3. pages/index.js 코딩 *pages폴더에 반드시 위치해야한다. next에서 자동으로 react를 import해준다. 
+4. pages/profile.js, signup.js 코딩
+5. components/AppLayout.js 코딩, npm i prop-types 설치
+6. pages에 있는 파일 AppLayout으로 감싸기
+7. AppLayout에서 navbar 코딩
+8. eslint 설치 (npm i -D eslint eslint-plugin-react eslint-plugin-import eslint-plugin-react-hooks) 
+9. eslint 설정 (.eslintrc) : import React from 'react'를 빼먹었더니 eslint에서 에러를 발생시킨다.
