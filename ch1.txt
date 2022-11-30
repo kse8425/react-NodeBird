@@ -1,0 +1,25 @@
+1. Front-end Design Tool
+- Ant Design
+- styled components
+- npm i antd styled-components @ant-design/icons 설치
+
+2. Menu 디자인
+- antd Menu를 이용해 navbar 디자인
+- antd css를 적용하기 위해 _app.js 생성
+- _app.js는 pages파일의 부모 태그:
+- antd 최신 버전은 'antd/dist/antd.css'파일이 없어서 antd@4버전으로 재설치
+
+3. Head 태그 커스텀
+- import Head from 'next/head'로 불러온다
+- 수정하고 싶은 위치에서 <Head>태그를 사용
+
+4. 반응형 그리드 사용
+- antd에서 Row, Col 불러오기
+- Row부터 디자인 후 Col을 채운다
+- 반응형 디자인은 모바일 화면부터 디자인한다
+- 왼쪽 메뉴, contents, 오른쪽 메뉴로 그리드 적용
+
+5. 로그인 폼 만들기
+- UserProfile, LoginForm 컴포넌트 생성
+- isLoggedIn 더미 데이터를 사용해 UserProfile 또는 LoginForm 보여주기
+- id,password를 받는 LoginForm 만들기

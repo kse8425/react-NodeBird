@@ -10,10 +10,13 @@
   "author": "eric",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
+    "antd": "^4.24.4",
     "next": "^9.5.5",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "eslint": "^8.28.0",
