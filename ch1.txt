@@ -23,3 +23,30 @@
 - UserProfile, LoginForm 컴포넌트 생성
 - isLoggedIn 더미 데이터를 사용해 UserProfile 또는 LoginForm 보여주기
 - id,password를 받는 LoginForm 만들기
+
+6. 리렌더링 이해하기
+- css 코드를 inline할 때 객체로 넣으면 변경한 값이 없지만 리렌더링 된다.
+- 위 문제를 해결하기 위해 styled-components 사용
+- 리렌더링 시 return 부분 전체를 다시 그리는 것은 아니고, 변경되는 부분만 다시 그린다.
+
+7. 더미 데이터로 로그인하기
+- form 태그에서 submit 발생하면 onFinish 실행
+- onFinish에 onSubmitForm 함수 연결
+- onSubmitForm에서 setIsLoggedIn을 props로 받아서 true 변경해 로그인 처리
+- UserProfile 컴포넌트는 Card 태그를 사용해 디자인
+- UserProfile에 로그아웃 버튼 생성
+
+8. 크롬 확장프로그램과 Q&A
+- React DevTools, Redux DevTools 설치
+
+9. 프로필 페이지 만들기
+- 컴포넌트 단위로 먼저 코딩
+- NicknameEditForm, FollowList 생성
+- NicknameEditForm는 Form, Input.Search 사용해 디자인, 닉네임 수정 기능
+- FollowList는 List로 디자인, 팔로잉, 팔로워 목록 출력
+
+10. 회원가입 페이지 만들기(커스텀 훅)
+- Input tag에서 중복되는 코드 커스텀 훅으로 만들기
+- 회원가입 페이지에서 id,닉네임,비밀번호,비밀번호체크,약관동의 필드 만들기
+- 비밀번호체크, 약관동의는 커스텀 훅 사용하지 않고 Error체크 로직 추가
+- 가입하기 버튼 만들고, onSubmit에서 비밀번호, 약관동의 한 번더 체크
