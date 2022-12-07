@@ -1,0 +1,61 @@
+1. 리덕스 설치와 필요성 소개
+    - redux,next-redux-wrapper@6 설치(npm i redux next-redux-wrapper@6)
+    - ./store/configureStore.js에서 redux 설정
+    - _app.js에서 redux 적용
+    - redux는 데이터 중앙저장소 역할
+    - 초보는 redux 적응되면 mobx사용
+    - react context api는 비동기 작업이 힘들다.
+
+2. 리덕스의 원리와 불변성
+    - 데이터 중앙저장소에 데이터를 만든다.
+    - 액션을 통해 중앙저장소의 데이터를 수정한다.
+    - 수정하는 로직을 reducer에서 코딩한다.
+    - 각각의 데이터마다 액션을 만들어줘야 하기 때문에 코드량이 증가한다.
+    - data의 히스토리를 추적하기 위해 reducer에서는 새로운 객체를 리턴한다. 
+    - memory 효율을 위해 ...state를 사용해 변경되지 않는 data는 참조관계를 유지한다.
+
+3. 리덕스 실제 구현하기
+    - react-redux 설치 (npm i react-redux)
+    - ./reducers/index.js 파일 생성
+    - 위 설명을 코드로 구현
+    - initialState에 초기 data 저장
+    - loginAction, logoutAction 생성
+    - setIsLoggedIn 대신 dispatch(action)을 사용해 LoginForm,UserProfile 수정
+
+4. 미들웨어와 리덕스 데브툴즈
+    - redux 히스토리를 보기위해 미들웨어 설정
+    - npm i redux-devtools-extension 설치
+    - 설정을 마치면 리덕스 데브툴즈에서 data 히스토리를 볼 수 있다.
+
+5. 리듀서 쪼개기
+    - 액션이 많아지면 swtich문이 길어져서 여러 파일로 분리해서 관리
+    - ./reducers/user.js, post.js 생성
+    - ./reducers/index.js에 있는 user와 관련된 코드들을 user.js로 분리
+    - index.js에서 user.js 불러와서 사용
+
+6. 더미데이터와 포스트폼 만들기
+    - post.js에 mainPosts 더미데이터 작성
+    - ADD_POST 액션 코딩
+    - 게시글 추가 했을 사용할 더미데이터 작성
+    - reducer에 ADD_POST 액션 코딩
+    - pages/index.js에 게시글 폼과 목록 구현
+    - Form은 로그인 여부를 확인하고 작성할 수 있게한다.
+    - post는 map을 통해 출력하고, key는 post.id로 한다.
+    - 글 작성, 이미지 업로드를 하는 PostForm.js 작성
+
+7. 게시글 구현하기
+    - PostCard.js 작성
+    - antd Card 태그 사용
+    - cover는 PostImages 컴포넌트(미구현)
+    - 4개의 버튼 추가(리트윗,좋아요,댓글,더보기)
+    - 더보기에는 수정,삭제,신고 버튼 포함
+    - 게시글 작성자가 본인일 경우 수정,삭제
+    - 작성자가 본인이 아닐 경우 신고 버튼 출력
+    - 좋아요, 댓글 토글 기능 구현
+
+8. 댓글 구현하기
+    - 댓글 목록을 antd List로 구현
+    - 댓글에는 작성자,댓글,아바타가 들어감
+    - 댓글을 입력 받는 CommentForm 구현
+    - TextArea와 Submit버튼 구현
+    - onFinish 이벤트는 console.log로 임시로 구현
