@@ -1,0 +1,50 @@
+1. redux-thunk 이해하기
+    - redux-thunk는 비동기 액션을 dispatch할 수 있게 도와주는 redux 미들웨어
+    - npm i redux-thunk 설치
+    - store/configureStore.js redux-thunk 추가
+    - loggerMiddleware 만들고 사용해보기
+    - redux-thunk 대신 redux-saga를 쓰는 이유는 saga가 더 많은 기능을 제공하기 때문
+
+2. saga 설치하고 generator 이해하기
+    - redux-thunk 삭제(num rm redux-thunk)후 redux-saga 설치(npm i redux-saga)
+    - 미들웨어에 sagaMiddleware 추가, store.sagaTask에 rootSaga 저장
+    - sagas/index.js 생성
+    - generator는 중단점이 있는 함수
+    - 무한 루프를 돌려서 무한을 표현하거나 이벤트 리스너 역할을 하는 함수를 만들 수 있음
+
+3. saga 이펙트 알아보기
+    - redux-saga/effects 에서 all,fork,call,take,put 불러오기
+    - all은 배열을 받고 배열안의 항목을 한번에 실행
+    - fork는 비동기 함수 호출, call은 동기 함수 호출
+    - take는 액션이 실행될 때까지 대기, 액션이 실행되면 인자로 받은 함수 실행
+    - put은 dispatch와 같다.
+
+    - 로그인을 saga로 구현하면, rootSaga에 watchLogIn 등록
+    - watchLogIn은 LOG_IN_REQUEST 액션이 올때까지 대기, 액션이 오면 logIn generator 실행
+    - logIn generator는 서버로 로그인을 보내는 logInAPI 함수를 실행
+    - 요청에 성공하면 LOG_IN_SUCCESS 액션 dispatch, 실패하면 LOG_IN_FAILURE 액션 dispatch
+    - 같은 패턴으로 LOG_OUT, ADD_POST 구현
+    
+    - 실제 로그인 요청을 하려면 데이터가 필요한데 데이터는 action.data로 전달
+    - call이나 fork를 사용한다면 함수와 인자를 펼쳐서 입력한다.
+    - ex) call(login, data) => login(data)와 같이 호출된다.
+    - generator 함수를 쓰면 테스트하기 편하다.
+
+4. take, take 시리즈, throttle 알아보기
+    - take는 한번 밖에 못 쓴다. while(true) 감싸면 여러번 사용할 수 있다.
+    - takeEvery는 여러번 사용할 수 있다.
+    - takeLatest는 마지막 액션만 실행된다. 실수로 발생한 중복 요청을 막을 수 있다.
+    - takeLatest는 Back-end에서 오는 요청을 취소하는 것이다. 응답을 취소하진 않는다. 따라서 서버에는 2개의 요청이 실행된다.
+    - throttle는 설정한 시간동안 요청을 한 번만 보낸다.
+    - 서버를 구현하기 전까지 delay 함수를 사용한다.
+
+5. saga 쪼개고 reducer와 연결하기
+    - index.js 코드량이 많아지만 여러 개의 js로 쪼갠다
+    - post.js, user.js 생성
+    - user.js에 login,logout 함수 옮기기
+    - post.js에 ADD_POST 함수 옮기기
+    - indjex.js에서 userSaga,postSaga 호출해서 rootSaga에 추가
+    
+    - saga에 구현된 액션을 reducer에 등록
+    - 기능(로그인,로그아웃,글작성)마다 요청,성공,실패 액션을 만든다.
+    - 기존에 사용하던 액션을 saga로 구현한 액션으로 수정 
