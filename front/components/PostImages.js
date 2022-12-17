@@ -18,7 +18,7 @@ const PostImages = ({ images }) => {
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
-  } else if (images.length === 2) {
+  } if (images.length === 2) {
     return (
       <>
         <img
@@ -38,31 +38,30 @@ const PostImages = ({ images }) => {
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
-  } else {
-    return (
-      <>
-        <div>
-          <img
-            role="presentation"
-            style={{ display: 'inline-block', width: '50%' }}
-            src={images[0].src}
-            alt={images[0].src}
-            onClick={onZoom}
-          />
-          <div
-            role="presentation"
-            style={{ display: 'inline-block', width: '50%', textalign: 'center', verticalalign: 'middle' }}
-            onClick={onZoom}
-          >
-            <PlusOutlined />
-            <br />
-            {images.length - 1} 개의 사진 더보기
-          </div>
-        </div>
-        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
-      </>
-    );
   }
+  return (
+    <>
+      <div>
+        <img
+          role="presentation"
+          style={{ display: 'inline-block', width: '50%' }}
+          src={images[0].src}
+          alt={images[0].src}
+          onClick={onZoom}
+        />
+        <div
+          role="presentation"
+          style={{ display: 'inline-block', width: '50%', textalign: 'center', verticalalign: 'middle' }}
+          onClick={onZoom}
+        >
+          <PlusOutlined />
+          <br />
+          {images.length - 1} 개의 사진 더보기
+        </div>
+      </div>
+      {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
+    </>
+  );
 };
 
 PostImages.propTypes = {

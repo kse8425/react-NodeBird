@@ -48,3 +48,55 @@
     - saga에 구현된 액션을 reducer에 등록
     - 기능(로그인,로그아웃,글작성)마다 요청,성공,실패 액션을 만든다.
     - 기존에 사용하던 액션을 saga로 구현한 액션으로 수정 
+
+6. 액션과 상태 정리하기
+    - 액션 이름을 변수로 추출
+    - state변수들 선언(Loading,Done,Error)
+    - dummy 데이터를 반환하는 함수 생성
+    - 회원가입(signUp) 액션 등록, state 변수 선언
+    - 댓글작성(addComment) 액션 등록, state 변수 선언
+
+7. 바뀐 상태 적용하고 eslint 점검하기
+    - 바뀐 상태 정보 수정하기
+    - ID를 email로 수정
+    - 프로필 화면 카드 내용 수정
+    - 프로필 페이지 더미 데이터를 redux로 교체
+    - Post Form 수정
+    - 댓글 Form 수정
+    - 커스텀 훅(useInput)에 setValue 리턴 값에 추가하고 사용하기
+    - npm i -D babel-eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react-hooks
+    - .eslintrc 수정
+    - npm i -D eslint-plugin-jsx-a11y
+    - eslint 적용하고 코드 수정하기
+
+8. 게시글, 댓글 saga 작성하기
+    - 닉네임 수정(changeNickname) 액션 만들기
+    - PostForm에서 직접 입력한 데이터 출력하기
+    - post의 key 값을 지정하기 위해 npm i shortid 설치
+    - 더미데이터를 편리하게 생성하기 위해 npm i faker 설치
+    - post.js에서 shortid 불러와서 dummyPost.id에 적용
+    - 댓글 등록 구현하기
+    - 댓글 등록 시 댓글 등록된 post의 index 찾기
+    - post index를 이용해서 post 데이터를 불변성을 유지하면서 복사
+    - 복사된 post에 불변성을 유지하면서 댓글 추가
+    - 변경된 post를 mainPost 객체에 불변성 유지하면서 추가
+    - mainPost 반환
+
+9. 게시글 삭제 saga 작성하기
+    - 짹짹, 팔로잉, 팔로워 구현하기
+    - user 더미데이터에 팔로잉,팔로워 더미데이터 추가
+    - 게시글 삭제 기능 구현
+    - User에서 Post reduce에 접근하기 위해 액션(add_post_to_me, remove_post_of_me) 만들기
+    - addpost함수 실행 시 ADD_POST_TO_ME 액션 호출
+    - User ruducer에 ADD_POST_TO_ME 액션 구현(불변성 유지)
+    - User ruducer에 REMOVE_POST_OF_ME 액션 구현(filter 사용)
+    - PostCard.js에서 삭제 버튼 클릭 시 REMOVE_POST_REQUEST 액션 호출
+
+10. immer 도입하기
+    - npm i immer 설치
+    - immer 개발한 사람 상줘야 함!!!
+    - return immer(state, draft=>{})하고 switch문을 callback 함수 안으로 이동
+    - state 대신 draft를 이용해 상태를 관리하면 immer 불변성을 지켜 줌
+    - 배열은 unshift 함수 이용
+
+11. faker로 실감나는 더미데이터 만들기

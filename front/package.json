@@ -13,6 +13,7 @@
     "@ant-design/icons": "^4.8.0",
     "antd": "^4.24.4",
     "axios": "^1.2.1",
+    "immer": "^9.0.16",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.2",
     "prop-types": "^15.8.1",
@@ -23,12 +24,16 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.2",
+    "shortid": "^2.2.16",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
-    "eslint": "^8.28.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.21.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4"
   }
 }
