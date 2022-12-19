@@ -100,3 +100,11 @@
     - 배열은 unshift 함수 이용
 
 11. faker로 실감나는 더미데이터 만들기
+    - npm i faker 설치 -> npm install @faker-js/faker --save-dev
+    - faker를 이용해 mainPosts에 20개 더미 데이터 추가
+    - mainPosts 형식은 그대로 유지
+    - id는 shortId.generate()사용, nickname, content는 faker 사용
+    - 로그인 안한 상태에서 프로필 page로 이동 시 /로 리다이렉트
+    - Redux Toolkit 찾아보기
+
+12. 인피니트 스크롤링 적용하기

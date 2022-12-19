@@ -1,5 +1,7 @@
 import shortId from 'shortid';
 import produce from 'immer';
+import { faker } from '@faker-js/faker';
+faker.setLocale('ko');
 
 export const initialState = {
   mainPosts: [
@@ -70,6 +72,26 @@ export const initialState = {
   addCommentError: null,
 };
 
+initialState.mainPosts = initialState.mainPosts.concat(
+  Array(20).fill().map(() => ({
+    id: shortId.generate(),
+    User: {
+      id: shortId.generate(),
+      nickname: faker.name.lastName() + faker.name.firstName(),
+    },
+    content: faker.lorem.paragraph(),
+    Images: [{
+      src: faker.image.imageUrl(),
+    }],
+    Comments: [{
+      User: {
+        id: shortId.generate(),
+        nickname: faker.name.lastName() + faker.name.firstName(),
+      },
+      content: faker.lorem.sentence(),
+    }],
+  })),
+);
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
