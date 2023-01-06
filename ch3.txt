@@ -108,3 +108,23 @@
     - Redux Toolkit 찾아보기
 
 12. 인피니트 스크롤링 적용하기
+    - 인피니트 스크롤링을 적용하기 위해 generagteDummyPost 함수 생성
+    - LOAD_POSTS 액션 생성
+    - index.js에서 useEffect로 감싸진 더미데이터 호출 코드 작성
+    - loadPosts state 생성
+    - reducer에 action 로직 구현
+    - saga에 loadPostsAtion 구현
+    - 스크롤이 거의 마지막 위치까지 갔을 때 더미데이터 불러오는 코드 작성
+    - scrollY(top에서 얼마나 내려왔는지),clientHeight(뷰포트 높이),scrollHeight(html 박스 전체 높이)
+    - 를 이용해 마지막까지 스크롤 됐는지 판단
+    - 스크롤 이벤트에 의해 중복 요청을 막기 위해 saga에서 throttle 사용
+    - throttl은 발생한 요청을 취소해 주지는 않는다.
+    - LOAD_POSTS_REQUEST 요청 조건에 loading state가 false 조건을 추가
+
+13. 팔로우, 언팔로우 구현하기
+    - Card 태그에 FollowButton 추가
+    - 로그인 했을때만 FollowButton 보이게 구현
+    - 게시글 작성자가 followings에 있는지 판단하는 isFollowing 함수 추가
+    - isFollowing에 따라 버튼도 바뀌게 구현
+    - isFollowing에 따라 다른 액션 함수 호출 구현
+    - redux,sega follow,unfollow 액션 구현

@@ -1,15 +1,21 @@
 import produce from 'immer';
 
 export const initialState = {
+  followLoading: false, // 팔로우 시도 중
+  followDone: false,
+  followError: null,
+  unfollowLoading: false, // 언팔로우 시도 중
+  unfollowDone: false,
+  unfollowError: null,
   logInLoading: false, // 로그인 시도 중
   logInDone: false,
   logInError: null,
   logOutLoading: false, // 로그아웃 시도 중
   logOutDone: false,
   logOutError: null,
-  signupLoading: false, // 회원가입 시도 중
-  signupDone: false,
-  signupError: null,
+  signUpLoading: false, // 회원가입 시도 중
+  signUpDone: false,
+  signUpError: null,
   changeNicknameLoading: false, // 닉네임 변경 시도 중
   changeNicknameDone: false,
   changeNicknameError: null,
@@ -64,6 +70,40 @@ export const logoutRequestAction = () => ({
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case UNFOLLOW_REQUEST:
+      draft.unfollowLoading = true;
+      draft.unfollowDone = false;
+      draft.unfollowError = null;
+      break;
+
+    case UNFOLLOW_SUCCESS:
+      draft.unfollowLoading = false;
+      draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
+      draft.unfollowDone = true;
+      break;
+
+    case UNFOLLOW_FAILURE:
+      draft.unfollowLoading = false;
+      draft.unfollowError = action.error;
+      break;
+
+    case FOLLOW_REQUEST:
+      draft.followLoading = true;
+      draft.followDone = false;
+      draft.followError = null;
+      break;
+
+    case FOLLOW_SUCCESS:
+      draft.followLoading = false;
+      draft.me.Followings.push({ id: action.data });
+      draft.followDone = true;
+      break;
+
+    case FOLLOW_FAILURE:
+      draft.followLoading = false;
+      draft.followError = action.error;
+      break;
+
     case LOG_IN_REQUEST:
       draft.logInLoading = true;
       draft.logInDone = false;
@@ -73,7 +113,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case LOG_IN_SUCCESS:
       draft.logInLoading = false;
       draft.logInDone = true;
-      draft.me = dummyUser(action.data);
+      draft.me = action.data;
       break;
 
     case LOG_IN_FAILURE:
