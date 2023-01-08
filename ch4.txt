@@ -95,3 +95,39 @@
     - 로그인 했는지 검사하는 isLoggedIn 함수와 로그인 안 했는지 검사하는 isNotLoggedIn 함수를 구현한다
     - 회원가입, 로그인, 로그아웃 router에 적용한다.
     - 중복을 제거하기 위해 미들웨어를 사용한다.
+
+14. 게시글, 댓글 작성하기
+    - 게시글 로직 따라가기
+    - sagas/addPost에서 back API(method:post url:/post)로 요청 보내기
+    - router post(/post)에서 요청으로 온 data로 post 객체 생성
+    - 생성된 객체를 다시 front로 보내기
+    - saga에서 응답으로 온 post객체를 reducer로 보내기
+    - 댓글 로직 따라가기
+    - sagas/addComment에서 back API(method:post url:/게시글id/comment)로 요청 보내기
+    - 댓글의 url은 동적으로 바뀌기 때문에 '/:postId/comment'와 같이 작성한다
+    - 게시글와 댓글의 UserId는 passport 디시리얼라이즈에서 req.user에 넣어주기 때문에 req.user에서 꺼내 사용한다.
+    - 미들웨어를 사용해 로그인 한 사용자만 요청할 수 있게 설정
+    - 존재하지 않는 게시글에 댓글을 작성할 수 없게 구현
+
+15. credentials로 쿠키 공유하기
+    - 게시글, 댓글 테스트
+    - 로그인을 했음에도 401에러 발생
+    - 브라우저와 백엔드 서버의 도메인이 달라서 발생하는 문제(쿠키가 전달되지 않음)
+    - cors 설정에 credentials를 true로 설정해서 해결
+    - axios 3번째 인자에서 withCredentials:true를 추가해야 함
+    - 이부분이 중복되기 때문에 axios.defaults에서 설정한다.
+    - crendentials를 설정하면 cors origin를 *로 사용할 수 없기 때문에 정확한 url를 허용한다.
+    - 기본 post만으로는 정보가 부족하기 때문에 추가적인 정보를 include 해준다.
+
+16. 내 로그인 정보 매번 불러오기
+    - 새로고침하면 로그인이 풀리는 것 처럼 보이지만, cookie는 가지고 있다.
+    - user 객체를 응답하는 /user 라우터를 만든다.
+    - 로그아웃 시에는 null를 응답한다.
+    - 프론트 index 페이지에서 백엔드 서버로 요청하는 코드를 구현
+    - index페이지 시작 때 LOAD_USER_REQUEST 호출
+    - LOAD_USER(redux,saga) 코드 구현
+    - 로그인 폼이 잠깐 나왔다가 프로필로 넘어가는 건 CSR이라서 그렇다.
+    - 프로필에서 필요한 정보는 게시물,팔로잉,팔로워 갯수만 필요하다. 따라서 다른 데이터는 제외하고 가져온다.
+
+17.
+

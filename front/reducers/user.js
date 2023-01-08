@@ -1,6 +1,9 @@
 import produce from 'immer';
 
 export const initialState = {
+  loadUserLoading: false, // 유저정보 가져오기 시도 중
+  loadUserDone: false,
+  loadUserError: null,
   followLoading: false, // 팔로우 시도 중
   followDone: false,
   followError: null,
@@ -23,6 +26,10 @@ export const initialState = {
   signUpData: {},
   loginData: {},
 };
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -50,15 +57,6 @@ export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
-const dummyUser = (data) => ({
-  ...data,
-  nickname: 'Eric',
-  id: 1,
-  Posts: [{ id: 1 }],
-  Followings: [{ nickname: '사랑' }, { nickname: '희망' }, { nickname: '시내' }],
-  Followers: [{ nickname: '사랑' }, { nickname: '희망' }, { nickname: '시내' }],
-});
-
 export const loginRequestAction = (data) => ({
   type: LOG_IN_REQUEST,
   data,
@@ -70,6 +68,22 @@ export const logoutRequestAction = () => ({
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case LOAD_USER_REQUEST:
+      draft.loadUserLoading = true;
+      draft.loadUserDone = false;
+      draft.loadUserError = null;
+      break;
+
+    case LOAD_USER_SUCCESS:
+      draft.loadUserLoading = false;
+      draft.me = action.data;
+      draft.loadUserDone = true;
+      break;
+
+    case LOAD_USER_FAILURE:
+      draft.loadUserLoading = false;
+      draft.loadUserError = action.error;
+      break;
     case UNFOLLOW_REQUEST:
       draft.unfollowLoading = true;
       draft.unfollowDone = false;
