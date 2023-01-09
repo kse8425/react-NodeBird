@@ -1,1 +1,1 @@
-docker run -e POSTGRES_DB=react-nodebird -e POSTGRES_USER=eric -e POSTGRES_PASSWORD=nodebird  -d -p 5432:5432 postgres
+docker run --name react_nodebird_DB -e POSTGRES_DB=react-nodebird -e POSTGRES_USER=eric -e POSTGRES_PASSWORD=nodebird  -dp 5432:5432 postgres

@@ -129,5 +129,27 @@
     - 로그인 폼이 잠깐 나왔다가 프로필로 넘어가는 건 CSR이라서 그렇다.
     - 프로필에서 필요한 정보는 게시물,팔로잉,팔로워 갯수만 필요하다. 따라서 다른 데이터는 제외하고 가져온다.
 
-17.
+17. 게시글 불러오기
+    - sagas에서 loadPost Back으로 게시글 목록 요청(/posts get방식) 보내기
+    - 게시글을 불러오는 방식에는 limit,offset 방식이 있다.
+    - posts route 생성, app.js에서 불러오기
+    - post(단수)와 posts(복수)를 구분에 API를 설계하는 것을 선호한다.
+    - posts route에서 findAll함수로 모든 post객체를 가져올 수 있다.
+    - findAll 조건을 줄 수 있는데 limit 한번에 10개씩 offset 게시글의 시작점을 지정할 수있다.
+    - limit, offset 방식은 중간에 데이터를 추가하거나 삭제하면 데이터가 중복되거나 누락 될 수 있기 때문에 실무에서 잘 사용하지 않는다.
+    - 그래서 lastId 방식을 사용한다.
+    - post 데이터를 가져올 때 완성된 데이터를 가져오도록 한다.
+    - 오류를 찾기 위해 npm i morgan 설치 후 app.js에 추가
 
+18. 게시글 좋아요
+    - onToggleLike를 onUnlike,onLike로 수정
+    - 좋아요 기능 action 생성(LIKE_POST_REQUREST,UNLIKE_POST_REQUREST)
+    - 좋아요 url -> /post/:postId/list(patch), 싫어요 url -> /post/:postId/list (delete)
+    - reducer에서 좋아요,싫어요 front 로직 구현
+
+19. 게시글 제거 / 닉네임 변경
+    - 게시글 제거 router 생성 /post/:postId (delete)
+    - 닉네임 수정 router 생성 /user/nickname (patch)
+    - 게시글 제거, 닉네임 수정 액션 수정
+    - 닉네임 수정 컴포넌트에서 수정 로직을 onSearch에 연결
+    - 자신이 쓴 게시글은 팔로우 버튼 안보이기 수정
