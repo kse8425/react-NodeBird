@@ -1,10 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path')
+const fs = require('fs');
 
 const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+try {
+  fs.accessSync('uploads');
+} catch(error) {
+  console.log('upload 폴더 생성!!')
+  fs.mkdirSync('uploads');
+}
 router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
   try {
     const post = await Post.create({
@@ -36,7 +45,30 @@ router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
     next(error);
   }
 })
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, res, done) {
+      done(null, 'uploads');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname)
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + new Date().getTime() + ext);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+});
 
+router.post('/images', isLoggedIn,upload.array('image'), async (req,res,next)=>{
+  console.log(req.files)
+  res.json(req.files.map((v) => v.filename));
+  try{
+
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+})
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => { // POST /post
   try {
     const post = await Post.findOne({
