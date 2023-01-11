@@ -1,0 +1,13 @@
+1. 서버사이드렌더링 준비하기
+    - 브라우저에서 Home 컴포넌트가 실행되기 전 프론트 서버에서 백엔드 서버로 요청보내기
+    - 리덕스 index 구조 수정
+    - LOAD_USER_REQUEST,LOAD_POSTS_REQUEST처리가 끝날때까지 기다리고 렌더링하기
+
+2. SSR시 쿠키 공유하기
+    - LOAD_MY_INFO 액션 생성
+    - SSR 요청은 프론트 서버가 백엔드 서버로 보내기 때문에 쿠키가 빠졌있다.
+    - SSR 요청을 보내기 전 http 헤더에 쿠키를 추가해서 요청한다.
+
+3. getStaticProps 사용해보기
+    - about 페이지 만들기
+    -

@@ -1,7 +1,7 @@
-import { all, fork, put, takeLatest,  call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 import {
-  LOAD_USER_REQUEST,
+  LOAD_MY_INFO_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
   LOG_IN_REQUEST,
@@ -27,7 +27,12 @@ import {
   LOAD_FOLLOWERS_FAILURE,
   LOAD_FOLLOWINGS_REQUEST,
   LOAD_FOLLOWINGS_SUCCESS,
-  LOAD_FOLLOWINGS_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE,
+  LOAD_FOLLOWINGS_FAILURE,
+  REMOVE_FOLLOWER_REQUEST,
+  REMOVE_FOLLOWER_SUCCESS,
+  REMOVE_FOLLOWER_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE,
 } from '../reducers/user';
 
 function changeNicknameAPI(data) {
@@ -49,8 +54,8 @@ function* changeNickname(action) {
   }
 }
 
-function loadUserAPI() {
-  return axios.get('/user');
+function loadUserAPI(data) {
+  return axios.get(`/user/${data}`);
 }
 
 function* loadUser(action) {
@@ -63,6 +68,25 @@ function* loadUser(action) {
   } catch (err) {
     yield put({
       type: LOAD_USER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function loadMyInfoAPI() {
+  return axios.get('/user');
+}
+
+function* loadMyInfo() {
+  try {
+    const result = yield call(loadMyInfoAPI);
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
       error: err.response.data,
     });
   }
@@ -255,6 +279,10 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
+function* watchLoadMyInfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
+
 function* watchLoadFollowers() {
   yield takeLatest(LOAD_FOLLOWERS_REQUEST, loadFollowers);
 }
@@ -262,10 +290,12 @@ function* watchLoadFollowers() {
 function* watchLoadFollowings() {
   yield takeLatest(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
 }
+
 export default function* userSaga() {
   yield all([
     fork(watchChangeNickname),
     fork(watchLoadUser),
+    fork(watchLoadMyInfo),
     fork(watchSignUp),
     fork(watchLogIn),
     fork(watchLogOut),

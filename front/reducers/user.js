@@ -4,6 +4,9 @@ export const initialState = {
   loadUserLoading: false, // 유저정보 가져오기 시도 중
   loadUserDone: false,
   loadUserError: null,
+  loadMyInfoLoading: false, // 유저정보 가져오기 시도 중
+  loadMyInfoDone: false,
+  loadMyInfoError: null,
   followLoading: false, // 팔로우 시도 중
   followDone: false,
   followError: null,
@@ -32,10 +35,12 @@ export const initialState = {
   changeNicknameDone: false,
   changeNicknameError: null,
   me: null,
-  signUpData: {},
-  loginData: {},
+  userInfo:null,
 };
 
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
@@ -90,6 +95,23 @@ export const logoutRequestAction = () => ({
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case LOAD_MY_INFO_REQUEST:
+      draft.loadMyInfoLoading = true;
+      draft.loadMyInfoDone = false;
+      draft.loadMyInfoError = null;
+      break;
+
+    case LOAD_MY_INFO_SUCCESS:
+      draft.loadMyInfoLoading = false;
+      draft.me = action.data;
+      draft.loadMyInfoDone = true;
+      break;
+
+    case LOAD_MY_INFO_FAILURE:
+      draft.loadMyInfoLoading = false;
+      draft.loadMyInfoError = action.error;
+      break;
+
     case LOAD_USER_REQUEST:
       draft.loadUserLoading = true;
       draft.loadUserDone = false;
@@ -98,7 +120,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
 
     case LOAD_USER_SUCCESS:
       draft.loadUserLoading = false;
-      draft.me = action.data;
+      draft.userInfo = action.data;
       draft.loadUserDone = true;
       break;
 
