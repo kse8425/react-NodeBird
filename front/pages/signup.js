@@ -2,11 +2,15 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
-import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import useInput from '../hooks/useInput';
-import { SIGN_UP_REQUEST } from '../reducers/user';
+import Router from 'next/router';
+import { END } from 'redux-saga';
+import axios from 'axios';
+
 import AppLayout from '../components/AppLayout';
+import useInput from '../hooks/useInput';
+import { LOAD_MY_INFO_REQUEST, SIGN_UP_REQUEST } from '../reducers/user';
+import wrapper from '../store/configureStore';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -63,7 +67,7 @@ const Signup = () => {
     console.log(email, nickname, password);
     dispatch({
       type: SIGN_UP_REQUEST,
-      data: {email, password, nickname},
+      data: { email, password, nickname },
     });
   }, [password, passwordCheck, term]);
 
@@ -75,22 +79,22 @@ const Signup = () => {
       <Form onFinish={onSubmit}>
         <div>
           <label htmlFor="user-email">이메일</label>
-          <br/>
-          <Input name="user-email" type={email} value={email} required onChange={onChangeEmail}/>
+          <br />
+          <Input name="user-email" type={email} value={email} required onChange={onChangeEmail} />
         </div>
         <div>
           <label htmlFor="user-nickname">닉네임</label>
-          <br/>
-          <Input name="user-nickname" value={nickname} required onChange={onChangeNickname}/>
+          <br />
+          <Input name="user-nickname" value={nickname} required onChange={onChangeNickname} />
         </div>
         <div>
           <label htmlFor="user-password">패스워드</label>
-          <br/>
-          <Input name="user-password" type="password" value={password} required onChange={onChangePassword}/>
+          <br />
+          <Input name="user-password" type="password" value={password} required onChange={onChangePassword} />
         </div>
         <div>
           <label htmlFor="user-password-check">비밀번호체크</label>
-          <br/>
+          <br />
           <Input
             name="user-password-check"
             type="password"
@@ -106,7 +110,7 @@ const Signup = () => {
           </Checkbox>
           {termError && <ErrorMessage>약관에 동의하셔야 가입할 수 있습니다.</ErrorMessage>}
         </div>
-        <div style={{marginTop: '1rem'}}>
+        <div style={{ marginTop: '1rem' }}>
           <Button type="primary" htmlType="submit" loading={signUpLoading}>가입하기</Button>
         </div>
       </Form>
@@ -114,4 +118,20 @@ const Signup = () => {
   );
 };
 
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  console.log('getServerSideProps start');
+  console.log(context.req.headers);
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+
+  context.store.dispatch(END);
+  console.log('getServerSideProps end');
+  await context.store.sagaTask.toPromise();
+});
 export default Signup;

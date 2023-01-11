@@ -53,7 +53,11 @@ router.get('/:userId', async (req, res, next) => {
       }]
     })
     if(fullUserWithoutPassword){
-    res.status(200).json(fullUserWithoutPassword);
+      const data = fullUserWithoutPassword.toJSON();
+      data.Posts = data.Posts.length;
+      data.Followers = data.Followers.length;
+      data.Followings = data.Followings.length;
+    res.status(200).json(data);
     } else {
       res.status(404).json('존재하지 않는 사용자입니다.');
     }

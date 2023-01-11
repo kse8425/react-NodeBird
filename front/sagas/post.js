@@ -21,7 +21,13 @@ import {
   UNLIKE_POST_FAILURE,
   UPLOAD_IMAGES_REQUEST,
   UPLOAD_IMAGES_SUCCESS,
-  UPLOAD_IMAGES_FAILURE, RETWEET_FAILURE, RETWEET_SUCCESS, RETWEET_REQUEST,
+  UPLOAD_IMAGES_FAILURE,
+  RETWEET_FAILURE,
+  RETWEET_SUCCESS,
+  RETWEET_REQUEST,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
@@ -58,6 +64,25 @@ function* UnlikePost(action) {
   } catch (err) {
     yield put({
       type: UNLIKE_POST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function loadPostAPI(data) {
+  return axios.get(`/post/${data}`);
+}
+
+function* loadPost(action) {
+  try {
+    const result = yield call(loadPostAPI, action.data);
+    yield put({
+      type: LOAD_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_POST_FAILURE,
       error: err.response.data,
     });
   }
@@ -187,11 +212,15 @@ function* retweet(action) {
 }
 
 function* watchLikePost() {
-  yield throttle(5000, LIKE_POST_REQUEST, likePost);
+  yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
 
 function* watchUnlikePost() {
-  yield throttle(5000, UNLIKE_POST_REQUEST, UnlikePost);
+  yield takeLatest(UNLIKE_POST_REQUEST, UnlikePost);
+}
+
+function* watchLoadPost() {
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
 function* watchLoadPosts() {
@@ -225,6 +254,7 @@ export default function* postSaga() {
     fork(watchAddPost),
     fork(watchLikePost),
     fork(watchUnlikePost),
+    fork(watchLoadPost),
     fork(watchLoadPosts),
     fork(watchRemovePost),
     fork(watchAddCommnet),

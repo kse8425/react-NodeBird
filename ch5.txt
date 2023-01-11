@@ -10,4 +10,16 @@
 
 3. getStaticProps 사용해보기
     - about 페이지 만들기
-    -
+    - getStaticProps에 LOAD_USER_REQUEST 요청 넣기
+    - 다른 유저 정보 가져오기 라우터 생성(/user/1 GET)
+    - 다른 정보 유출을 막기 위해 게시글,팔로우,팔로워 길이만 가져오기
+    - getStaticProps는 정적 서비스, getServerSideProps는 동적 서비스에 사용
+    - 프로필 페이지, 회원가입 페이지에도 SSR 적용
+
+4. 다이나믹 라우팅
+    - 게시글 url 주소를 지정하기 위해 다이나믹 라우팅 사용
+    - 단일 게시글 요청 액션 생성, router 추가(/post/1 GET)
+    - 단일 게시글에 해더 추가(타이틀, 메타 정보)
+    - front/public/favicon.ico를 추가해서 favicon 적용
+
+
