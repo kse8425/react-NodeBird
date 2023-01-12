@@ -22,4 +22,18 @@
     - 단일 게시글에 해더 추가(타이틀, 메타 정보)
     - front/public/favicon.ico를 추가해서 favicon 적용
 
+5. CSS 서버사이드렌더링
+    - 처음 페이지에 접속 했을때 CCS가 적용되지 않는 문제가 있음
+    - Next에서 제공되는 babel을 커스텀해서 어느정도 해결
+    - npm i babel-plugin-styled-components 설치
+    - _app.js를 감싸는 _document.js를 만들고, CSS SSR 코드 추가
+    - 인터넷 익스플로러 지원을 위해 polyfill 추가
+
+6. 사용자 게시글, 해시태그 게시글
+    - 특정 사용자의 게시글만 볼 수 있는 페이지 만들기
+    - user 폴더에 [id].js 파일 생성
+    - LOAD_USER_POSTS_REQUEST 액션 생성(재사용 할 수 있는 state들은 다시 만들지 않는다)
+    - 한 페이지에서 액션들이 같이 사용되지 않는다면 state을 공유할 수 있다.
+    -
+
 
