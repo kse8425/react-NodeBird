@@ -16,13 +16,13 @@ const User = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
-  const { mainPosts, hasMorePosts, loadUserPostsLoading } = useSelector((state) => state.post);
+  const { mainPosts, hasMorePosts, loadUserPostsLoading: loadPostsLoading } = useSelector((state) => state.post);
   const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
     const onScroll = () => {
-      if (window.pageYOffset + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-        if (hasMorePosts && !loadUserPostsLoading) {
+      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+        if (hasMorePosts && !loadPostsLoading) {
           dispatch({
             type: LOAD_USER_POSTS_REQUEST,
             lastId: mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1].id,
@@ -35,7 +35,7 @@ const User = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [mainPosts.length, hasMorePosts, id]);
+  }, [mainPosts.length, hasMorePosts, id, loadPostsLoading]);
 
   return (
     <AppLayout>
@@ -45,11 +45,11 @@ const User = () => {
             {userInfo.nickname}
             님의 글
           </title>
-          <meta name="description" content={`${userInfo.nickname}님의 게시글`} />
-          <meta property="og:title" content={`${userInfo.nickname}님의 게시글`} />
-          <meta property="og:description" content={`${userInfo.nickname}님의 게시글`} />
-          <meta property="og:image" content="https://nodebird.com/favicon.ico" />
-          <meta property="og:url" content={`https://nodebird.com/user/${id}`} />
+          <meta name="description" content={`${userInfo.nickname}님의 게시글`}/>
+          <meta property="og:title" content={`${userInfo.nickname}님의 게시글`}/>
+          <meta property="og:description" content={`${userInfo.nickname}님의 게시글`}/>
+          <meta property="og:image" content="https://nodebird.com/favicon.ico"/>
+          <meta property="og:url" content={`https://nodebird.com/user/${id}`}/>
         </Head>
       )}
       {userInfo
@@ -58,17 +58,17 @@ const User = () => {
             actions={[
               <div key="twit">
                 짹짹
-                <br />
+                <br/>
                 {userInfo.Posts}
               </div>,
               <div key="following">
                 팔로잉
-                <br />
+                <br/>
                 {userInfo.Followings}
               </div>,
               <div key="follower">
                 팔로워
-                <br />
+                <br/>
                 {userInfo.Followers}
               </div>,
             ]}
@@ -80,7 +80,7 @@ const User = () => {
           </Card>
         )
         : null}
-      {mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
+      {mainPosts.map((post) => <PostCard key={post.id} post={post}/>)}
     </AppLayout>
   );
 };
