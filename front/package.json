@@ -5,16 +5,20 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=production next start",
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build"
   },
   "author": "eric",
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
+    "@next/bundle-analyzer": "^13.1.2",
     "antd": "^4.24.4",
     "axios": "^1.2.1",
     "babel-plugin-styled-components": "^2.0.7",
+    "cross-env": "^7.0.3",
     "immer": "^9.0.16",
+    "moment": "^2.29.4",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.2",
     "prop-types": "^15.8.1",
@@ -26,7 +30,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.2",
     "shortid": "^2.2.16",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

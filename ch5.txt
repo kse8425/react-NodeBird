@@ -36,5 +36,40 @@
     - 한 페이지에서 액션들이 같이 사용되지 않는다면 state을 공유할 수 있다.
     - /user/1/posts GET, /hashtag/노드 GET router 생성
 
+7. getStaticPaths
+    - getStaticPaths는 다이나믹 라우팅 일 때 getStaticProps와 함께 사용
+    - getStaticPaths는 paths,fallback을 리턴한다.
+    - paths에는 다이나믹 라우팅에서 미리 빌드할 경로를 적어준다.
+    - fallback를 true로 하면 paths에 없는 경로도 접근이 가능하다.
+    - 사용하기 힘들다.
 
+8. SWR 사용해보기
+    - SWR은 액션을 간단하게 만들 수 있는 라리브러리
+    - npm i swr(front npm에 설치)
+    - useSWR에 swr import, useSWR 인자는 url, fatcher(데이터를 가져오는 방법)
+    - 프로필 페이지에서 SWR를 사용해 팔로잉, 팔로워 수를 가져온다.
+    - 프로필 페이지 요청 시 한번에 가져올 팔로잉, 팔로워 수를 저장하는 state를 만든다.
+    - 함수가 실행될 때 마다 limit state를 3씩 올리는 함수를 만든다.
+    - 위에 만든 함수를 FollowList 컴포넌트로 넘겨준다.
 
+9. 해시태그 검색하기
+    - 페이지 검색창에서 검색버튼 눌렀을 때 hashtag로 검색되게 하기
+    - 검색창 입력값을 저장할 state 추가
+    - 검색 시 /hashtag/### 페이지로 이동(router.push() 사용)
+    - 아바타 클릭 시 사용자 게시글 보여주기
+
+10. moment와 next 빌드하기
+    - 날짜 라이브러리 moment 사용하기(npm i moment(front))
+    - npm run build 로 빌드 실행
+
+11. 커스텀 웹팩과 bundle-analyzer
+    - 커스텀 웹팩 설정을 위해 next.config.js 생성
+    - 웹팩 설정 코드를 bundle-analyzer로 감싸준다.
+    - build 커맨드에 환경변수=값 같은 형식으로 환경변수 값을 설정할 수 있다.
+    - 윈도우 환경에서 환경변수 적용을 위해 npm i cross-env 설치
+    - 웹팩 설정에서 불필요한 moment 언어 파일 제거
+
+12. 배포 전 Q&A
+    - model 설정 코드 class 형식으로 변환
+    - immer 라이브러리 e11 지원하기
+    - SSR 확인 할 때 disable javascript 체크하고 확인해보기

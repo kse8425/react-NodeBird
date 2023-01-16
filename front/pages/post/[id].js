@@ -15,6 +15,10 @@ const Post = () => {
   const { id } = router.query;
   const { singlePost } = useSelector((state) => state.post);
 
+  // if (router.isFallback) {
+  //   return <div>로딩중...</div>;
+  // }
+
   return (
     <AppLayout>
       <Head>
@@ -22,19 +26,30 @@ const Post = () => {
           {singlePost.User.nickname}
           님의 글
         </title>
-        <meta name="description" content={singlePost.content} />
-        <meta property="og:title" content={`${singlePost.User.nickname}님의 게시글`} />
-        <meta property="og:description" content={singlePost.content} />
+        <meta name="description" content={singlePost.content}/>
+        <meta property="og:title" content={`${singlePost.User.nickname}님의 게시글`}/>
+        <meta property="og:description" content={singlePost.content}/>
         <meta
           property="og:image"
           content={singlePost.Images[0] ? singlePost.Images[0].src : 'https://nodebird.com/favicon.ico'}
         />
-        <meta property="og:url" content={`https://nodebird.com/post/${id}`} />
+        <meta property="og:url" content={`https://nodebird.com/post/${id}`}/>
       </Head>
-      <PostCard post={singlePost} />
+      <PostCard post={singlePost}/>
     </AppLayout>
   );
 };
+
+// export async function getStaticPaths() {
+//   return {
+//     paths: [
+//       { params: { id: '8' } },
+//       { params: { id: '9' } },
+//       { params: { id: '10' } },
+//     ],
+//     fallback: true,
+//   };
+// }
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const cookie = context.req ? context.req.headers.cookie : '';
