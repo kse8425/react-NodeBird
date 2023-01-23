@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(morgan('dev'));
 }
 app.use(cors({
-  origin: ['http://localhost:3000', 'nodebird.com', 'http://3.35.210.199'],
+  origin: ['http://localhost:3000', 'http://front.ofabrica.com'],
   credentials: true,
 }));
 app.use('/', express.static(path.join(__dirname, 'uploads')));
@@ -43,6 +43,11 @@ app.use(session({
   saveUninitialized: false,
   resave: false,
   secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure:false,
+    domain: process.env.NODE_ENV === 'production' && '.ofabrica.com'
+  },
 }));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -31,4 +31,12 @@
     - pm2 설치
     - back 주소를 저장할 변수 설정
     - npx pm2 start npm -- start로 pm2으로 npm start 실행
-    - 
+    - DB table 대문자로 생성되는 것 수정
+
+6. 도메인 연결하기
+    - 도메인 구입 후 route53에서 ns수정
+    - 탄력적 ip 생성 후 ec2 인스턴스와 연결
+    - 도메인 front -> front ec2 ip 연결
+    - 도메인 back -> back ec2 ip 연결
+    - backURL 수정
+    -
