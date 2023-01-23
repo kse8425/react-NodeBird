@@ -57,4 +57,5 @@
     - lambda 함수 생성 후 s3에 업로드 한 코드 등록
 
 9. 카카오톡 공유하기 & 강좌 마무리
-    - 
+    - 이미지 주소 불러오는 코드 수정(back:original -> thumb // front : thumb -> original)
+    -
