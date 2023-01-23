@@ -58,4 +58,4 @@
 
 9. 카카오톡 공유하기 & 강좌 마무리
     - 이미지 주소 불러오는 코드 수정(back:original -> thumb // front : thumb -> original)
-    -
+    - lambda 코드 오류 수정
