@@ -11,7 +11,7 @@ module.exports = class Hashtag extends Model {
       },
     }, {
       modelName: 'Hashtag',
-      tableName: 'Hashtags',
+      tableName: 'hashtags',
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci', // 이모티콘 저장
       sequelize,

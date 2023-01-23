@@ -12,7 +12,7 @@ module.exports = class Post extends Model {
       // RetweetId
     }, {
       modelName: 'Post',
-      tableName: 'Posts',
+      tableName: 'posts',
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci', // 이모티콘 저장
       sequelize,
