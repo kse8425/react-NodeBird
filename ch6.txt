@@ -11,3 +11,17 @@
     - sudo apt-get install -y nodejs
     - node -v, npm -v 설치 됐는지 확인
     - npm 모듈 설치 후 npm run build
+
+3. 우분투에 MySQL 설치하기
+    - MySQL 대신 postgreSQL 설치
+    - npm start -> node app 추가
+    - .env 파일 추가
+    - back server port 80으로 변경
+
+4. pm2 사용하기
+    - 포그라운드로 서비스 실행하면 터미널 종료 시 서비스도 같이 종료 됨
+    - 백그라운드로 서비스를 실행하기 위해 npm i pm2 설치
+    - npm start -> pm2 start app.js로 변경
+    - sudo npm start로 서버 실행(80포트는 root 권한으로 실행)
+    - npx pm2 monit 명령어로 서버 로그를 볼 수 있다.
+    - 서버 보안을 위해 hpp,helmet 설치
