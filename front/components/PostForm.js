@@ -48,7 +48,7 @@ const PostForm = () => {
     });
   }, []);
 
-  const onRemoveImgae = useCallback((index) => () => {
+  const onRemoveImage = useCallback((index) => () => {
     dispatch({
       type: REMOVE_IMAGE,
       data: index,
@@ -56,20 +56,23 @@ const PostForm = () => {
   }, []);
   return (
     <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>
-      <Input.TextArea value={text} onChange={onChangeText} maxLength={140} placeholder="내용을 입력하세요." />
+      <Input.TextArea
+        value={text}
+        onChange={onChangeText}
+        maxLength={140}
+        placeholder="어떤 신기한 일이 있었나요?"
+      />
       <div>
         <input type="file" name="image" multiple hidden ref={imageInput} onChange={onChangeImages} />
         <Button onClick={onClickImageUpload}>이미지 업로드</Button>
-        <Button type="primary" style={{ float: 'right' }} htmlType="submit">
-          짹짹
-        </Button>
+        <Button type="primary" style={{ float: 'right' }} htmlType="submit">짹짹</Button>
       </div>
       <div>
         {imagePaths.map((v, i) => (
           <div key={v} style={{ display: 'inline-block' }}>
-            <img src={v.src.replace(/\/thumb\//, '/original/')} alt={v} style={{ width: '200px' }} />
+            <img src={v.replace(/\/thumb\//, '/original/')} style={{ width: '200px' }} alt={v} />
             <div>
-              <Button onClick={onRemoveImgae(i)}>제거</Button>
+              <Button onClick={onRemoveImage(i)}>제거</Button>
             </div>
           </div>
         ))}
