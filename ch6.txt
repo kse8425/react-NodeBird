@@ -38,5 +38,14 @@
     - 탄력적 ip 생성 후 ec2 인스턴스와 연결
     - 도메인 front -> front ec2 ip 연결
     - 도메인 back -> back ec2 ip 연결
-    - backURL 수정
+    - backURL 수정, app.js에 front domain 주소 추가
+    - git pull 후 pm2 reload
+
+7. S3 연결하기
+    - S3 퍼블릭 허용으로 버킷 생성
+    - S3 정책 생성(GetObject, PutObject 허용)
+    - AWS 자격증명 생성
+    - npm i multer-s3 aws-sdk 설치
+    - post.js에서 AWS sdk를 이용해 이미지 파일 업로드
     -
+

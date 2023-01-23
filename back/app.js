@@ -24,17 +24,20 @@ db.sequelize.sync()
   .catch(console.error);
 passportConfig();
 if (process.env.NODE_ENV === 'production') {
-  console.log('배포환경!!')
   app.use(morgan('combined'));
   app.use(hpp());
   app.use(helmet());
+  app.use(cors({
+    origin: ['http://front.ofabrica.com'],
+    credentials: true,
+  }));
 } else {
   app.use(morgan('dev'));
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
 }
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://front.ofabrica.com'],
-  credentials: true,
-}));
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
