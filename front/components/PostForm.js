@@ -67,7 +67,7 @@ const PostForm = () => {
       <div>
         {imagePaths.map((v, i) => (
           <div key={v} style={{ display: 'inline-block' }}>
-            <img src={`${backURL}/${v}`} alt={v} style={{ width: '200px' }} />
+            <img src={v} alt={v} style={{ width: '200px' }} />
             <div>
               <Button onClick={onRemoveImgae(i)}>제거</Button>
             </div>
