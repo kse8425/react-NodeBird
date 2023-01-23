@@ -20,10 +20,11 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "eric",
+    "password": process.env.DB_PASSWORD,
+    "database": "react-nodebird",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "port": "5432",
+    "dialect": "postgres"
   }
 }
