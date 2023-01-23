@@ -47,5 +47,10 @@
     - AWS 자격증명 생성
     - npm i multer-s3 aws-sdk 설치
     - post.js에서 AWS sdk를 이용해 이미지 파일 업로드
+    - multer-s3 버전 문제 오류 -> 2.9.0 버전 설치
+
+8. Lambda로 이미지 리사이징 하기
+    - 이미지 리사이징만 처리하는 Lambda 서버 생성
+    - lambda 폴더 생성 후 npm i aws-sdk sharp 설치
     -
 
