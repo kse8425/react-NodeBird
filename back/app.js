@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet());
   app.use(cors({
-    origin: ['http://front.ofabrica.com'],
+    origin: ['https://front.ofabrica.com'],
     credentials: true,
   }));
 } else {
@@ -48,7 +48,7 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   cookie: {
     httpOnly: true,
-    secure:false,
+    secure:true,
     domain: process.env.NODE_ENV === 'production' && '.ofabrica.com'
   },
 }));
@@ -59,6 +59,6 @@ app.use('/post', postRouter);
 app.use('/posts', postsRouter);
 app.use('/user', userRouter)
 app.use('/hashtag', hashtagRouter);
-app.listen(80, () => {
+app.listen(3065, () => {
   console.log('서버 실행 중')
 })
