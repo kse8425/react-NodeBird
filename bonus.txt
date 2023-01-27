@@ -20,4 +20,20 @@
     - 배포환경에서 sagaMiddleware 사용
     - console.log HYDRATE 삭제
     - 링크를 미리 불러오지 않게 prefetch false로 설정
-    -
+    - nginx를 사용해서 back을 실행하려면 proxy 설정이 필요
+
+4. 게시글 수정하기
+    - 프로필의 아바타 링크 prefetch false
+    - 리트윗 게시글 수정할 수 없게 변경
+    - 자신의 아바타 클릭 시 프로필 뜨지 않게 변경
+    - 게시글 수정 액션 생성
+    - 게시글 수정 클릭 시 Textarea가 나타나게 코드 작성
+
+5. 빠르게 어드민 페이지 만들기
+    - forestadmin 회원가입하고 프로젝트 생성
+    - createSequelizeDataSource 매개변수에 db.sequelize 입력
+
+6. 팔로잉한 게시글만 가져오기
+    - related,unrelated 라우터 만들기
+    - 내가 팔로잉한 유저를 찾고, op를 사용해서 팔로잉 한 유저 list를 where에 넘김
+    - unrelated 라우터는 op에서 notIn으로 사용하면 됨

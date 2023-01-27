@@ -18,8 +18,8 @@ try {
 }
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey:process.env.S3_SECRET_ACCESS_KEY,
-  region:'ap-northeast-2',
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: 'ap-northeast-2',
 })
 const upload = multer({
   storage: multerS3({
@@ -47,7 +47,6 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
           }))
       );
       await post.addHashtags(result.map((v) => v[0]));
-
     }
     if (req.body.image) {
       if (Array.isArray(req.body.image)) {
@@ -89,7 +88,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
 
 router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
   console.log(req.files)
-  res.json(req.files.map((v) => v.location.replace(/\/original\//,'/thumb/')));
+  res.json(req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')));
   try {
 
   } catch (error) {
@@ -106,32 +105,32 @@ router.get('/:postId', async (req, res, next) => { // POST /post
       return res.status(403).send('존재하지 않는 게시글입니다.')
     }
     const fullPost = await Post.findOne({
-      where: {id: post.id},
+      where: { id: post.id },
       include: [{
-        model:Post,
-        as:'Retweet',
+        model: Post,
+        as: 'Retweet',
         include: [{
-          model:User,
-          attributes: ['id','nickname'],
-        },{
-          model:Image,
+          model: User,
+          attributes: ['id', 'nickname'],
+        }, {
+          model: Image,
 
         }]
-      },{
-        model:User,
-        attributes:['id','nickname'],
-      },{
-        model:Image,
-      },{
-        model:Comment,
-        include:[{
-          model:User,
-          attributes:['id','nickname'],
+      }, {
+        model: User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
         }]
       }, {
-        model:User,
-        as:'Likers',
-        attributes:['id'],
+        model: User,
+        as: 'Likers',
+        attributes: ['id'],
       }],
     })
     res.status(200).json(fullPost);
@@ -171,32 +170,32 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => { // POST 
       content: 'retweet',
     });
     const retweetWithPrevPost = await Post.findOne({
-      where: {id: retweet.id},
+      where: { id: retweet.id },
       include: [{
-        model:Post,
-        as:'Retweet',
+        model: Post,
+        as: 'Retweet',
         include: [{
-          model:User,
-          attributes: ['id','nickname'],
-        },{
-          model:Image,
+          model: User,
+          attributes: ['id', 'nickname'],
+        }, {
+          model: Image,
 
         }]
-      },{
-        model:User,
-        attributes:['id','nickname'],
-      },{
-        model:Image,
-      },{
-        model:Comment,
-        include:[{
-           model:User,
-          attributes:['id','nickname'],
+      }, {
+        model: User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
         }]
       }, {
-        model:User,
-        as:'Likers',
-        attributes:['id'],
+        model: User,
+        as: 'Likers',
+        attributes: ['id'],
       }],
     })
     res.status(201).json(retweetWithPrevPost);
@@ -258,6 +257,34 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+router.patch('/:postId', isLoggedIn, async (req, res, next) => {
+    const hashtags = req.body.content.match(/#[^\s#]+/g);
+    try {
+      await Post.update({
+        content: req.body.content,
+      }, {
+        where: {
+          id: req.params.postId,
+          UserId: req.user.id,
+        },
+      });
+      const post = await Post.findOne({ where: { id: req.params.postId } });
+      if (hashtags) {
+        const result = await Promise.all(
+          hashtags.map((tag) =>
+            Hashtag.findOrCreate({
+              where: { name: tag.slice(1).toLowerCase() },
+            }))
+        );
+        await post.setHashtags(result.map((v) => v[0]));
+      }
+      res.status(200).json({ PostId: parseInt(req.params.postId, 10), content: req.body.content })
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  });
+
 router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   try {
     await Post.destroy({
